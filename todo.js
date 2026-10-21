@@ -45,15 +45,26 @@ function deleteTask() {
     var deleteButtons = document.querySelectorAll('.delete');
     deleteButtons.forEach((deleteButton) => {
         deleteButton.addEventListener('click', function deleted() {
-            items.filter(item => item.elementId + 'delete' == deleteButton.id);
-            console.log('delete button clicked');
+            var novoArray = items.filter((item) => (item.elementId + 'delete' !== deleteButton.id));
+            items = novoArray;
+            saveList();
+            showList();
+            console.log(deleteButton.id + ' delete button clicked');
         });
     });
-
-    console.log(JSON.stringify(deleteButtons));
 }
 
-document.querySelector('#add').addEventListener("click", function addItem() {
+document.querySelector('#add').addEventListener("click", function clickPlus() {
+    addItem();
+});
+
+document.querySelector('#item-name').addEventListener('keypress', function Key(e) {
+    if (e.key == 'Enter') {
+        addItem();
+    }
+});
+
+function addItem() {
     let itemName = document.getElementById('item-name').value;
 
     if (itemName != "") {
@@ -68,8 +79,7 @@ document.querySelector('#add').addEventListener("click", function addItem() {
             showList();
         }
     }
-
-});
+}
 
 document.querySelector('#clear').addEventListener("click", function clearAll() {
     items = [];
