@@ -64,8 +64,8 @@ document.querySelector('#item-name').addEventListener('keypress', function Key(e
     }
 });
 
-function addItem() {
-    let itemName = document.getElementById('item-name').value;
+function addItem(itemName) {
+    itemName = document.getElementById('item-name').value;
 
     if (itemName != "") {
         if (document.querySelector(`#${itemName.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '').replace(/[^a-z0-9]/g, '')}`)) {
