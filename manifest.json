@@ -1,0 +1,8 @@
+{
+    "name": "To Do List",
+    "short_name": "To Do",
+    "start_url": "https://brunolieps.github.io/to-do-list/",
+    "display": "standalone",
+    "background_color": "#fffbeaff",
+    "theme_color": "#031927ff"
+}
