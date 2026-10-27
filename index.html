@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
+    <meta name="description" content="Lista de tarefas simples, rápida e offline.">
+    <meta name="theme-color" content="#031927">
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
+    <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="style.css">
     <title>To Do List</title>
 </head>
@@ -48,9 +52,16 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then((reg) => console.log('Service Worker registrado com sucesso:', reg.scope))
-                    .catch((err) => console.log('Falha ao registrar Service Worker:', err));
+                navigator.serviceWorker.register('./service-worker.js', {
+                    scope: './',
+                    updateViaCache: 'none'
+                })
+                    .then((registration) => {
+                        console.info('Service Worker registrado:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Falha ao registrar Service Worker:', error);
+                    });
             });
         }
     </script>
