@@ -4,11 +4,17 @@
     "short_name": "To Do",
     "description": "Lista de tarefas simples, rápida e offline.",
     "lang": "pt-BR",
+    "dir": "ltr",
     "start_url": "./",
     "scope": "./",
     "display": "standalone",
-    "background_color": "#e4eef0",
-    "theme_color": "#e4eef0",
+    "orientation": "any",
+    "background_color": "#0fa3b1",
+    "theme_color": "#0fa3b1",
+    "categories": [
+        "productivity",
+        "utilities"
+    ],
     "icons": [
         {
             "src": "./icons/icon-192.png",
@@ -27,6 +33,15 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "./src/screenshot.png",
+            "sizes": "1040x1360",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Lista de tarefas com um item concluído"
         }
     ]
 }
