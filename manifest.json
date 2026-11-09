@@ -37,11 +37,18 @@
     ],
     "screenshots": [
         {
-            "src": "./src/screenshot.png",
-            "sizes": "1040x1360",
+            "src": "./src/screenshot-light.png",
+            "sizes": "780x1020",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Lista de tarefas com um item concluído"
+            "label": "Tema claro: cartão de papel pautado sobre fundo verde-água"
+        },
+        {
+            "src": "./src/screenshot-dark.png",
+            "sizes": "780x1020",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Tema escuro: cartão de papel quadriculado sobre fundo azul-marinho"
         }
     ]
 }

@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'to-do-list-';
-const CACHE_NAME = `${CACHE_PREFIX}v3`;
+const CACHE_NAME = `${CACHE_PREFIX}v4`;
 
 const APP_SHELL = [
     './',
@@ -8,6 +8,7 @@ const APP_SHELL = [
     './todo.js',
     './manifest.json',
     './src/paper01.png',
+    './src/paper02.png',
     './icons/icon-192.png',
     './icons/icon-512.png',
     './icons/icon-maskable-512.png',

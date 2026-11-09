@@ -1,10 +1,10 @@
 # To Do List
 
-**Uma lista de tarefas que parece um bloquinho de papel — simples, rápida e offline.**
+**Uma lista de tarefas que parece um bloquinho de papel — simples, rápida e offline, no claro e no escuro.**
 
-<p align="center">
-  <img src="./src/screenshot.png" width="460" alt="Interface do To Do List: um cartão de papel texturizado sobre fundo verde-água, com quatro tarefas e o botão de adicionar">
-</p>
+| Claro | Escuro |
+| :---: | :---: |
+| <img src="./src/screenshot-light.png" width="340" alt="Tema claro do To Do List: papel pautado creme sobre fundo verde-água"> | <img src="./src/screenshot-dark.png" width="340" alt="Tema escuro do To Do List: papel quadriculado escuro sobre fundo azul-marinho"> |
 
 <p align="center">
   <img alt="PWA instalável" src="https://img.shields.io/badge/PWA-instal%C3%A1vel-0fa3b1?style=flat-square">
@@ -14,7 +14,7 @@
 
 ## Sobre
 
-Um app de lista de tarefas feito à mão em HTML, CSS e JavaScript puro — sem framework, sem bundler e sem dependências. O visual imita uma folha de papel pautado presa sobre uma mesa verde-água: cartão levemente inclinado, textura de papel, fonte manuscrita e microanimações nos itens.
+Um app de lista de tarefas feito à mão em HTML, CSS e JavaScript puro — sem framework, sem bundler e sem dependências. O visual imita um bloquinho de papel: cartão levemente inclinado, textura, fonte manuscrita e microanimações nos itens. No tema claro, o papel pautado fica sobre uma mesa verde-água; no escuro, vira papel quadriculado sobre azul-marinho.
 
 Os itens são salvos automaticamente no `localStorage` e o app funciona como PWA: pode ser instalado na tela inicial e aberto sem conexão.
 
@@ -22,9 +22,10 @@ Os itens são salvos automaticamente no `localStorage` e o app funciona como PWA
 
 - **Adicionar tarefas** pelo botão **+** ou pressionando **Enter** no campo de texto.
 - **Concluir e reabrir** itens pelo checkbox, com risco no texto ao marcar.
+- **Tema claro e escuro** — o botão de lua no rodapé troca a paleta e a textura na hora, e a escolha fica salva para a próxima visita.
 - **Excluir** um item pelo **×** ou **limpar a lista inteira** com o botão de lixeira.
 - **Persistência automática** — a lista continua lá depois de fechar o navegador.
-- **Offline** — o app shell (HTML, CSS, JS, manifest, ícones e textura) fica em cache pelo service worker.
+- **Offline** — o app shell (HTML, CSS, JS, manifest, ícones e as duas texturas) fica em cache pelo service worker.
 - **Instalável** — manifest completo com ícones `any`, `maskable` e `apple-touch`.
 - **Leve** — sem bibliotecas, sem requisições além da fonte.
 
@@ -32,7 +33,7 @@ Os itens são salvos automaticamente no `localStorage` e o app funciona como PWA
 
 | Camada | O que é usado |
 | --- | --- |
-| Interface | HTML + CSS (nesting, `:has`, animações em `cubic-bezier`) |
+| Interface | HTML + CSS (custom properties, nesting, `:has`, animações em `cubic-bezier`) |
 | Lógica | JavaScript vanilla, `localStorage` |
 | Offline | Service worker (network-first para navegação, stale-while-revalidate para assets) |
 | PWA | `manifest.json`, ícones PNG em 192/512 px |
@@ -67,35 +68,47 @@ Depois abra <http://localhost:8000>.
 ├── service-worker.js   # cache do app shell para funcionar offline
 ├── icons/              # ícones 192/512, maskable, apple-touch e favicon
 └── src/
-    ├── paper01.png     # textura de papel usada no cartão
-    └── screenshot.png  # imagem deste README
+    ├── paper01.png           # textura do tema claro (pautado)
+    ├── paper02.png           # textura do tema escuro (quadriculado)
+    ├── screenshot-light.png  # captura do tema claro
+    └── screenshot-dark.png   # captura do tema escuro
 ```
 
 ## Design
 
 O tema fica todo em variáveis CSS no topo de `style.css`:
 
-| Token | Cor | Uso |
-| --- | --- | --- |
-| `--primary` | `#0fa3b1` | fundo da página |
-| `--secondary` | `#f0f4f8` | papel do cartão e sombra dos textos |
-| `--text` | `#0b1f2a` | texto, bordas e ícones |
-| `--accent` | `#ff6b5b` | checkbox marcado, hover e seleção |
+| Token | Claro | Escuro | Uso |
+| --- | --- | --- | --- |
+| `--primary` | `#0fa3b1` | `#0b1f2a` | fundo da página |
+| `--secondary` | `#f0f4f8` | `#0b1f2a` | papel do cartão e sombra dos itens |
+| `--text` | `#0b1f2a` | `#f0f4f8` | texto, bordas e ícones |
+| `--accent` | `#ff6b5b` | `#ff6b5b` | checkbox marcado, hover e seleção |
+| `--shadow` | `#0b1f2a` | `#000000` | sombra do cartão |
+| `--papertexture` | `paper01.png` | `paper02.png` | textura do papel |
 
-Os ícones do app (pasta `icons/`) seguem a mesma paleta: uma folha de papel com uma tarefa concluída em coral sobre o fundo verde-água.
+Os ícones do app (pasta `icons/`) seguem a paleta clara: uma folha de papel com uma tarefa concluída em coral sobre o fundo verde-água.
+
+## Tema claro e escuro
+
+O botão de lua no rodapé alterna os temas em tempo de execução: o JavaScript reescreve as custom properties no elemento `<html>`, trocando as cores e a textura do cartão. O coral `#ff6b5b` continua como destaque nos dois temas.
+
+A escolha é salva no `localStorage` (chave `darkmode`) e reaplicada no próximo carregamento. Sem preferência salva, o app abre no claro — ele ainda não segue o `prefers-color-scheme` do sistema (veja as limitações abaixo).
 
 ## Offline e cache
 
 O service worker guarda uma lista fixa de arquivos (`APP_SHELL`) na instalação:
 
 - navegação usa **network-first**, caindo para o cache quando não há rede;
-- CSS, JS e imagens usam **stale-while-revalidate**, respondendo na hora e atualizando em segundo plano.
+- CSS, JS e imagens usam **stale-while-revalidate**, respondendo na hora e atualizando em segundo plano;
+- as duas texturas de papel entram no cache, então o tema escuro também funciona offline.
 
-Ao mudar qualquer arquivo da lista, **incremente `CACHE_NAME`** em `service-worker.js` (por exemplo, de `to-do-list-v3` para `to-do-list-v4`) para que os caches antigos sejam descartados na ativação.
+Ao mudar qualquer arquivo da lista, **incremente `CACHE_NAME`** em `service-worker.js` (por exemplo, de `to-do-list-v4` para `to-do-list-v5`) para que os caches antigos sejam descartados na ativação.
 
 ## Limitações conhecidas
 
 - Lista única: sem categorias, prazos, prioridades ou histórico.
+- O app não segue a preferência do sistema (`prefers-color-scheme`): sem escolha salva, abre sempre no claro.
 - O `id` de cada item é derivado do texto (`slugfy`), então **tarefas com nomes repetidos são ignoradas** e não existe edição — para renomear, exclua e crie de novo.
 - O botão de lixeira apaga tudo imediatamente, **sem confirmação nem desfazer**.
 - Os dados vivem no `localStorage` daquele navegador: não há sincronização entre dispositivos, e limpar os dados do site apaga a lista.
