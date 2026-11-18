@@ -1,9 +1,8 @@
 let globalId = 0;
+let selectedId = null;
 let items = [];
 let itemList = document.getElementById('item-list');
-let darkMode = false;
 loadList();
-loadDarkmode();
 
 function showList() {
     if (items != null) {
@@ -67,7 +66,7 @@ document.querySelector('#item-name').addEventListener('keypress', function Key(e
     }
 });
 
-function addItem(itemName) {
+function addItem() {
     itemName = document.getElementById('item-name').value;
 
     if (itemName != "") {
@@ -81,13 +80,13 @@ function addItem(itemName) {
     }
 }
 
-document.querySelector('#clear').addEventListener("click", function clearAll() {
+/*document.querySelector('#clear').addEventListener("click", function clearAll() {
     items = [];
     saveList();
 
     console.log('cleared ' + JSON.stringify(items));
     showList();
-});
+});*/
 
 function saveList() {
     localStorage.setItem('items', JSON.stringify(items));
@@ -105,48 +104,3 @@ function loadList() {
 
     showList();
 }
-
-/*function slugfy(string) {
-    return (string.toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '').replace(/[^a-z0-9]/g, ''));
-}*/
-
-function Darkmode() {
-    var root = document.documentElement;
-    var buttonDarkMode = document.querySelector('#darkmodetoggle');
-
-    if (darkMode) {
-        root.style.setProperty('--primary', '#0b1f2a');
-        root.style.setProperty('--secondary', '#0b1f2a');
-        root.style.setProperty('--text', '#f0f4f8');
-        root.style.setProperty('--shadow', '#000');
-
-        root.style.setProperty('--papertexture', 'url(src/paper02.png)');
-        buttonDarkMode.classList.add('ativo');
-    } else {
-        root.style.setProperty('--primary', '#0fa3b1');
-        root.style.setProperty('--secondary', '#f0f4f8');
-        root.style.setProperty('--text', '#0b1f2a');
-        root.style.setProperty('--shadow', '#0b1f2a');
-
-        root.style.setProperty('--papertexture', 'url(src/paper01.png)');
-        buttonDarkMode.classList.remove('ativo');
-    }
-}
-
-function loadDarkmode() {
-    if (localStorage.getItem('darkmode') != null) {
-        darkMode = localStorage.getItem('darkmode') === 'true';
-        Darkmode();
-
-        console.log('loaded darkmode: ' + darkMode);
-    }
-}
-
-document.querySelector('#darkmodetoggle').addEventListener("click", function toggle() {
-    darkMode = !darkMode;
-
-    Darkmode();
-
-    localStorage.setItem('darkmode', darkMode);
-    console.log("toggle mode " + darkMode);
-});
