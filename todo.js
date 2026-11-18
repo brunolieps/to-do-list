@@ -1,3 +1,4 @@
+let globalId = 0;
 let items = [];
 let itemList = document.getElementById('item-list');
 let darkMode = false;
@@ -75,7 +76,8 @@ function addItem(itemName) {
         if (document.querySelector(`#${slugfy(itemName)}`)) {
             console.log('Essa tarefa já existe');
         } else {
-            let item = { 'elementId': slugfy(itemName), 'name': itemName, 'checked': '' };
+            let item = { 'elementId': globalId, 'name': itemName, 'checked': '' };
+            globalId += 1;
             items.push(item);
             saveList();
 
@@ -95,11 +97,16 @@ document.querySelector('#clear').addEventListener("click", function clearAll() {
 
 function saveList() {
     localStorage.setItem('items', JSON.stringify(items));
+    localStorage.setItem('globalId', globalId);
 }
 
 function loadList() {
     if (localStorage.getItem('items') != null) {
         items = JSON.parse(localStorage.getItem('items'));
+    }
+
+    if (localStorage.getItem('globalId') != null) {
+        globalId = parseInt(localStorage.getItem('globalId'));
     }
 
     showList();
