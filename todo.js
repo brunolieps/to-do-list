@@ -111,6 +111,7 @@ function slugfy(string) {
 
 function Darkmode() {
     var root = document.documentElement;
+    var buttonDarkMode = document.querySelector('#darkmodetoggle');
 
     if (darkMode) {
         root.style.setProperty('--primary', '#0b1f2a');
@@ -119,6 +120,7 @@ function Darkmode() {
         root.style.setProperty('--shadow', '#000');
 
         root.style.setProperty('--papertexture', 'url(src/paper02.png)');
+        buttonDarkMode.classList.add('ativo');
     } else {
         root.style.setProperty('--primary', '#0fa3b1');
         root.style.setProperty('--secondary', '#f0f4f8');
@@ -126,6 +128,7 @@ function Darkmode() {
         root.style.setProperty('--shadow', '#0b1f2a');
 
         root.style.setProperty('--papertexture', 'url(src/paper01.png)');
+        buttonDarkMode.classList.remove('ativo');
     }
 }
 
