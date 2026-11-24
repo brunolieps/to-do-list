@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'to-do-list-';
-const CACHE_NAME = `${CACHE_PREFIX}v4`;
+const CACHE_NAME = `${CACHE_PREFIX}v5`;
 
 const APP_SHELL = [
     './',

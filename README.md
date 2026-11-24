@@ -103,7 +103,13 @@ O service worker guarda uma lista fixa de arquivos (`APP_SHELL`) na instalação
 - CSS, JS e imagens usam **stale-while-revalidate**, respondendo na hora e atualizando em segundo plano;
 - as duas texturas de papel entram no cache, então o tema escuro também funciona offline.
 
-Ao mudar qualquer arquivo da lista, **incremente `CACHE_NAME`** em `service-worker.js` (por exemplo, de `to-do-list-v4` para `to-do-list-v5`) para que os caches antigos sejam descartados na ativação.
+Ao mudar qualquer arquivo da lista, **incremente `CACHE_NAME`** em `service-worker.js` (por exemplo, de `to-do-list-v5` para `to-do-list-v6`) para que os caches antigos sejam descartados na ativação.
+
+## Metadados da página
+
+O `<head>` do `index.html` traz descrição, autor, `theme-color`, `color-scheme` (`light dark`), `robots` e as tags do Open Graph e do Twitter/X para compartilhamento. A imagem de compartilhamento aproveita `src/screenshot-light.png` (780×1020).
+
+> Ao publicar em uma URL definitiva, troque os valores relativos de `og:image` e `twitter:image` e o `og:url` por URLs absolutas do domínio final.
 
 ## Limitações conhecidas
 
